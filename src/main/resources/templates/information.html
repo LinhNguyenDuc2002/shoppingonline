@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <th:block th:include="header"></th:block>  
+    <div class="content">
+        <div id="header-content">
+            <div></div>
+            <div id="header-content-btn">
+                <a href="/blueshop" class="js-home">Home</a>
+                <a href="/product/addproduct" class="js-add-product">Add product</a>
+                <a href="/product" class="js-your-product">Your product</a>
+            </div>
+        </div>
+
+        <div class="user-detail">
+            <form method="POST" action="/blueshop/update" th:object="${user}">
+                <h1 th:text="@{${'Change personal information for '+user.getFullname()}}"></h1>
+                <input type="text" th:field="*{username}" placeholder="Enter username"/>
+                <p th:if="${#fields.hasErrors('username')}"  th:errors="*{username}" class="error"></p>
+                <input type="password" th:field="*{password}" placeholder="Enter new password"/>
+                <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}" class="error"></p>
+                <input type="text" th:field="*{fullname}" placeholder="Enter fullname"/>
+                <p th:if="${#fields.hasErrors('fullname')}"  th:errors="*{fullname}" class="error"></p>
+                <input type="date" th:field="*{dob}"/>
+                <input type="text" th:field="*{email}" placeholder="Enter email"/>
+                <input type="text" th:field="*{phone}" placeholder="Enter phone number"/>
+                <h2>Address</h2>
+                <input type="text" th:field="*{address.sonha}" placeholder="Số nhà"/>
+                <input type="text" th:field="*{address.xompho}" placeholder="Xóm, phố"/>
+                <input type="text" th:field="*{address.lang}" placeholder="Thôn (làng)"/>
+                <input type="text" th:field="*{address.phuongxa}" placeholder="Phường, xã"/>
+                <input type="text" th:field="*{address.quanhuyen}" placeholder="Quân, huyện"/></td>
+                <input type="text" th:field="*{address.tinhthanh}" placeholder="Tỉnh thành"/></td>
+                <div class="user-detail-button">
+                    <button id="signup">Update</button>
+                    <button><a href="/blueshop/delete">Delete account</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <th:block th:include="header"></th:block>
+    <div id="main">
+        <div class="content">
+            <div id="header-content">
+                <div></div>
+                <div id="header-content-btn">
+                    <a href="/blueshop" class="js-home">Home</a>
+                    <a href="/product/addproduct" class="js-add-product">Add product</a>
+                    <a href="/product" class="js-your-product">Your product</a>
+                </div>
+            </div>
+
+            <div class="product-list">
+                <div class="product-item" th:each="product :${products}">
+                    <div class="image">
+                        <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
+                    </div>
+                    <div class="info-product">
+                        <a th:href="@{${'/product/' + product.getIdproduct()}}"><p th:text="${product.getProductname()}"></p></a>
+                        <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
+                        <button><a href="#">Buy now</a></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div th:unless="${username != null}" class="modal js-modal-login">
+                <div class="modal-container">
+                    <div class="close js-close">X</div>
+                    <div id="modal-header">
+                        <h3>Login</h3>
+                    </div>
+                    <div id="modal-body">
+                        <form method="POST" action="/login">
+                            <p th:text="${error}" class="error"></p>
+                            <input type="text" id="username" placeholder="Enter username" name="username"><br/>
+                            <input type="password" id="password" placeholder="Enter password" name="password"><br/>
+                            <button id="login">Login</button>
+                        </form>
+                    </div>
+                    <footer id="modal-footer">
+                        <div>
+                            <h3>Sign up a new account</h3>
+                            <button class="js-signup">Sign Up</button>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+    
+            <div th:unless="${username != null}" class="modal js-modal-signup">
+                <div class="modal-container">
+                    <div class="close js-close">X</div>
+                    <div id="modal-header">
+                        <h3>Now, create a new account</h3>
+                    </div>
+                    <div id="modal-body">
+                        <form method="POST" action="/blueshop/insert" th:object="${user}">
+                            <h2>Personal information</h2>
+                            <input type="text" th:field="*{username}" placeholder="Enter username"/>
+                            <p th:if="${#fields.hasErrors('username')}"  th:errors="*{username}" class="error"></p>
+                            <input type="text" th:field="*{password}" placeholder="Enter password"/>
+                            <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}" class="error"></p>
+                            <input type="text" th:field="*{fullname}" placeholder="Enter fullname"/>
+                            <p th:if="${#fields.hasErrors('fullname')}"  th:errors="*{fullname}" class="error"></p>
+                            <input type="date" th:field="*{dob}"/>
+                            <input type="text" th:field="*{email}" placeholder="Enter email"/>
+                            <input type="text" th:field="*{phone}" placeholder="Enter phone number"/>
+                            <h2>Address</h2>
+                            <input type="text" th:field="*{address.sonha}" placeholder="Số nhà"/>
+                            <input type="text" th:field="*{address.xompho}" placeholder="Xóm, phố"/>
+                            <input type="text" th:field="*{address.lang}" placeholder="Thôn (làng)"/>
+                            <input type="text" th:field="*{address.phuongxa}" placeholder="Phường, xã"/>
+                            <input type="text" th:field="*{address.quanhuyen}" placeholder="Quân, huyện"/></td>
+                            <input type="text" th:field="*{address.tinhthanh}" placeholder="Tỉnh thành"/></td>
+                            <button id="signup">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <script>
+        const login = document.querySelector('.js-login')
+        const signup = document.querySelectorAll('.js-signup')
+        
+        const modal_login = document.querySelector('.js-modal-login')
+        const modal_signup = document.querySelector('.js-modal-signup')
+
+        const closes = document.querySelectorAll('.js-close')
+        function showLogin(){
+            modal_login.classList.add('open')
+            if (modal_signup.classList.contains('open')) {
+                modal_signup.classList.remove('open')
+            }
+        }
+        function showSignup(){
+            if (modal_login.classList.contains('open')) {
+                modal_login.classList.remove('open')
+            }
+            modal_signup.classList.add('open')
+        }
+        function hidden(){
+            if (modal_signup.classList.contains('open')) {
+                modal_signup.classList.remove('open')
+            }
+            else{
+                modal_login.classList.remove('open')
+            }
+        }
+        for(const close of closes){
+            close.addEventListener('click',hidden)
+        }
+        for(const btn of signup){
+            btn.addEventListener('click',showSignup)
+        }
+        login.addEventListener('click',showLogin)
+        
+
+        // function sendPostRequest() {
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open('POST', '/blueshop/login', true);
+        //     xhr.setRequestHeader('Content-Type', 'application/json');
+        //     xhr.onload = function() {
+        //         if (xhr.status === 200) {
+        //             var responseHtml = xhr.responseText;
+        //             document.getElementById('your-tab-content').innerHTML = responseHtml;
+        //         }
+        //     };
+        //     xhr.send('param1=value1&param2=value2');
+        // }
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"> -->
+</head>
+<body>
+    <div id="header">
+        <h1><a href="/blueshop" id="title">Blue shop</a></h1>
+        <div th:if="${username != null}" class="header_button">
+            <a href="/blueshop/infor" th:text="@{${'Hello, '+username+'!'}}" id="user"></a>
+            <a href="/blueshop/logout"><button class="js-logout">Log Out</button></a>
+        </div>
+        
+        <div th:unless="${username != null}" class="header_button">
+            <button class="js-login">Login</button>
+            <button class="js-signup">Sign Up</button>
+        </div>
+    </div>
+</body>
+</html>
