@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="header"></div>
+    <div class="modal js-modal-login open">
+        <div class="modal-container">
+            <div id="modal-header">
+                <h3>Login</h3>
+            </div>
+            <div id="modal-body">
+                <form method="POST" action="/login">
+                    <p th:text="${error}" class="error"></p>
+                    <input type="text" id="username" placeholder="Enter username" name="username"><br/>
+                    <input type="password" id="password" placeholder="Enter password" name="password"><br/>
+                    <button id="login">Login</button>
+                </form>
+            </div>
+            <footer id="modal-footer">
+                <div>
+                    <h3>Sign up a new account</h3>
+                    <button class="js-signup">Sign Up</button>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer"></div>
+</body>
+</html>

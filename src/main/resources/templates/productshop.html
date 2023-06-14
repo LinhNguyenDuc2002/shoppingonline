@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/all.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/all.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
     <link rel="stylesheet" href="../static/style.css">
 </head>
@@ -11,19 +13,18 @@
     <th:block th:include="header"></th:block>      
     <div class="content">
         <div id="header-content">
-                <div></div>
-                <div id="header-content-btn">
-                <a href="/blueshop" class="js-home">Home</a>
-                <a href="/product/addproduct" class="js-add-product">Add product</a>
-                <a href="/product" class="js-your-product">Your product</a>
-                </div>
+            <div></div>
+            <div id="header-content-btn">
+            <a href="/blueshop" class="js-home">Home</a>
+            <a href="/product/addproduct" class="js-add-product">Add product</a>
+            <a href="/product" class="js-your-product">Your product</a>
+            </div>
+        </div>
+        <div class="introduce">
+            <h3 th:text="@{${'Welcome to '+username+' shop'}}"></h3>
+            <p th:text="@{${'Địa chỉ: '+user.getStringAddress()}}"></p>
         </div>
         <div class="product-list">
-            <div class="introduce">
-                <h3 th:text="@{${'Welcome to '+shop.getFullname()+' shop'}}"></h3>
-                <!-- <p th:text="@{${shop.getAddress().getS}}"></p> -->
-
-            </div>
             <div class="product-item" th:each="product :${products}">
                 <div class="image">
                     <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>

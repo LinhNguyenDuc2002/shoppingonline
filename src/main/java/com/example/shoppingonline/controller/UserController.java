@@ -5,6 +5,7 @@ import com.example.shoppingonline.repository.AddressRepository;
 import com.example.shoppingonline.repository.ProductRepository;
 import com.example.shoppingonline.repository.RoleRepository;
 import com.example.shoppingonline.repository.UserRepository;
+import com.example.shoppingonline.service.BillService;
 import com.example.shoppingonline.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -55,6 +56,9 @@ public class UserController {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private BillService billService;
+
     @GetMapping("")
     public String home(Model model) throws ParseException {
         model.addAttribute("products",productRepository.findAll());
@@ -73,6 +77,16 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String login(Model model) throws ParseException {
+        model.addAttribute("username", null);
+        User user = new User();
+        DateFormat f = new SimpleDateFormat("MM-dd-yyyy");
+        user.setDob(f.parse("01-01-2023"));
+        model.addAttribute("user",user);
+        model.addAttribute("error","");
+        return "login";
+    }
     //ADMIN
     @GetMapping("/info")
     public String info(Model model){
@@ -165,4 +179,5 @@ public class UserController {
         }
         return "redirect:/blueshop";
     }
+
 }

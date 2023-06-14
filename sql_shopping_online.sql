@@ -57,9 +57,14 @@ MODIFY COLUMN note text;
 ALTER TABLE user
 ADD COLUMN role varchar(100);
 
+ALTER TABLE user
+ADD COLUMN shop varchar(100);
+
 ALTER TABLE bill
 ADD COLUMN idaddress int REFERENCES address(idaddress);
 
 INSERT into role(idrole,namerole) values(1,"ROLE_USER");
 INSERT into role(idrole,namerole) values(2,"ROLE_ADMIN");
+
+
 

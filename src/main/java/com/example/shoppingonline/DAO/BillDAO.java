@@ -1,6 +1,8 @@
 package com.example.shoppingonline.DAO;
 
+import com.example.shoppingonline.model.Bill;
 import com.example.shoppingonline.model.Product;
+import com.example.shoppingonline.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class BillDAO {
     @Autowired
     private EntityManager entityManager;
 
+    public void createBill(User user, Product product){
+
+    }
     public List<Product> findProductsByIduser(int id){
         //hibernate
         String jpql = "SELECT u.product FROM Bill u WHERE u.user.iduser=:id";

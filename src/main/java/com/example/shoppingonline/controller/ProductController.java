@@ -64,10 +64,13 @@ public class ProductController {
             model.addAttribute("username", null);
         }
 
+
         Optional<Product> product = productRepository.findById(id);
         if(product.isPresent()){
             int iduser = product.get().getUser().getIduser();
             List<Product> products = productService.getUserProduct(iduser);
+            User userCurrent = userRepository.findById(iduser).get();
+            model.addAttribute("user",userCurrent);
             model.addAttribute("products",products);
         }
         return "productshop";
@@ -149,4 +152,5 @@ public class ProductController {
         }
         return "redirect:/product";
     }
+
 }

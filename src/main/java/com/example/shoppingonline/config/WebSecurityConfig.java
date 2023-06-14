@@ -45,13 +45,14 @@ public class WebSecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { //phân quyền
         http.csrf().disable()//chống tấn công xác thực
                 .authorizeRequests()//phân quyền request
-                .requestMatchers("/product", "/blueshop/infor", "/blueshop/update", "/blueshop/delete",
+                .requestMatchers("/product", "/blueshop/infor", "/blueshop/update", "/blueshop/delete", "/blueshop/buy/**",
+                        "bill/**",
                         "/product/addproduct","/product/edit/**","/product/update/**").hasAuthority("ROLE_USER")
                 .requestMatchers("/blueshop/info").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll() // với endpoint /customer/** sẽ yêu cầu authenticate
                 .and()
                 .formLogin() // trả về page login nếu chưa authenticate
-//                .loginPage("/login") // URL của form đăng nhập tự tạo
+                .loginPage("/blueshop/login") // URL của form đăng nhập tự tạo
                 .loginProcessingUrl("/login") // URL để xử lý đăng nhập
                 .usernameParameter("username") // Tên tham số của username từ form login tự tạo
                 .passwordParameter("password") // Tên tham số của password từ form login tự tạo

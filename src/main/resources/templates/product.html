@@ -10,14 +10,6 @@
 <body>
     <th:block th:include="header"></th:block>      
     <div class="content">
-        <div id="header-content">
-                <div></div>
-                <div id="header-content-btn">
-                <a href="/blueshop" class="js-home">Home</a>
-                <a href="/product/addproduct" class="js-add-product">Add product</a>
-                <a href="/product" class="js-your-product">Your product</a>
-                </div>
-        </div>
         <div class="product-list">
             <div class="product-item" th:each="product :${products}">
                 <div class="image">
@@ -28,6 +20,9 @@
                     <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
                     <button><a th:href="@{${'/product/edit/'+product.getIdproduct()}}">Edit product</a></button>
                 </div>
+            </div>
+            <div class="add product-item">
+                <a href="/product/addproduct"><i class="fas fa-plus"></i></a>
             </div>
         </div>
     </div>

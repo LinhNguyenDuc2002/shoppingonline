@@ -53,6 +53,8 @@ public class User {
 
     private String phone;
 
+    private String shop;
+
     private String note;
 
     @OneToOne // Đánh dấu có mỗi quan hệ 1-1 với Address ở phía dưới
@@ -106,4 +108,26 @@ public class User {
         this.roles.add(role);
     }
 
+    public String getStringAddress(){
+        String ad = "";
+        if(this.address.getSonha()!=null){
+            ad += "Số nhà "+this.address.getSonha()+" - ";
+        }
+        if(this.address.getXompho()!=null){
+            ad += "Xóm/phố "+this.address.getXompho()+" - ";
+        }
+        if(this.address.getLang()!=null){
+            ad += "Thôn/làng "+this.address.getLang()+" - ";
+        }
+        if(this.address.getPhuongxa()!=null){
+            ad += "Phường/xã "+this.address.getPhuongxa()+" - ";
+        }
+        if(this.address.getQuanhuyen()!=null){
+            ad += "Quận/huyện "+this.address.getQuanhuyen()+" - ";
+        }
+        if(this.address.getTinhthanh()!=null){
+            ad += "Tỉnh/TP "+this.address.getTinhthanh();
+        }
+        return ad;
+    }
 }
