@@ -17,16 +17,19 @@
             <div id="modal-body">
                 <form method="POST" action="/login">
                     <p th:text="${error}" class="error"></p>
-                    <input type="text" id="username" placeholder="Enter username" name="username"><br/>
-                    <input type="password" id="password" placeholder="Enter password" name="password"><br/>
+                    <input type="text" id="username" placeholder="Enter username" name="username">
+                    <input type="password" id="password" placeholder="Enter password" name="password">
+                    <a href="#">Forgotten password?</a>
                     <button id="login">Login</button>
                 </form>
             </div>
             <footer id="modal-footer">
-                <div>
-                    <h3>Sign up a new account</h3>
-                    <button class="js-signup">Sign Up</button>
-                </div>
+                <form action="/blueshop/signup">
+                    <div>
+                        <h3>Sign up a new account</h3>
+                        <button class="js-signup">Sign Up</button>
+                    </div>
+                </form>
             </footer>
         </div>
     </div>

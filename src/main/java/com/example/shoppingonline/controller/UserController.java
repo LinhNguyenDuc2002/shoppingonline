@@ -65,27 +65,29 @@ public class UserController {
         try{
             Object u = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("username", ((UserDetailsImpl)u).getFullname());
+
+            User userCurrent = userRepository.findByUsername(((UserDetailsImpl)u).getUsername());
+            Address a = addressRepository.findById(2).get();
+            userCurrent.setAddress(a);
         }
         catch (Exception e){
-            model.addAttribute("username", null);
-            User user = new User();
-            DateFormat f = new SimpleDateFormat("MM-dd-yyyy");
-            user.setDob(f.parse("01-01-2023"));
-            model.addAttribute("user",user);
-            model.addAttribute("error","");
         }
         return "index";
     }
 
     @GetMapping("/login")
     public String login(Model model) throws ParseException {
+        return "login";
+    }
+
+    @GetMapping("/signup")
+    public String signup(Model model) throws ParseException {
         model.addAttribute("username", null);
         User user = new User();
         DateFormat f = new SimpleDateFormat("MM-dd-yyyy");
         user.setDob(f.parse("01-01-2023"));
         model.addAttribute("user",user);
-        model.addAttribute("error","");
-        return "login";
+        return "signup";
     }
     //ADMIN
     @GetMapping("/info")
@@ -100,20 +102,22 @@ public class UserController {
     @PostMapping("/insert")
     public String addUser(Model model, @Valid @ModelAttribute("user") User user, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "index";
+            return "signup";
         }
         try{
             if(userRepository.findByUsername(user.getUsername())==null && !user.getUsername().equals("anonymousUser")){
-                addressRepository.save(user.getAddress());
                 user.addRole(roleRepository.findById(1));
                 String encodedPassword = passwordEncoder.encode(user.getPassword());
                 user.setPassword(encodedPassword);
                 userRepository.save(user);
                 return "redirect:/blueshop";
             }
-            return "index";
+            else{
+                model.addAttribute("error","The username already exists");
+                return "signup";
+            }
         }catch (Exception e){
-            return "index";
+            return "signup";
         }
     }
 
@@ -128,21 +132,38 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updatePassword(Model model,@Valid @ModelAttribute("user") User user, BindingResult bindingResult){
+    public String updatePassword(Model model,@ModelAttribute("user") User user){
         Object u = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("username", ((UserDetailsImpl)u).getFullname());
 
         User userCurrent = userRepository.findByUsername(((UserDetailsImpl)u).getUsername());
-//        if(bindingResult.hasErrors()){ //có lỗi hay không
-//            model.addAttribute("user",userCurrent);
-//            return "information";
-//        }
-        try{
-            userService.updateUser(user, userCurrent);
-        }catch (Exception e){
-            model.addAttribute("error",e.toString());
+        boolean check = false;
+        if(user.getPassword().length()>0 && user.getPassword().length()<4){
+            model.addAttribute("errorPassword","Size must be between 4 and 100");
+            check = true;
         }
-        return "redirect:/blueshop/infor";
+        if(user.getUsername().length()==0){
+            model.addAttribute("errorUsername","Username couldn't be null");
+            check = true;
+        }
+        else if ((userRepository.findByUsername(user.getUsername())!=null && !user.getUsername().equals(userCurrent.getUsername())) || user.getUsername().equals("anonymousUser")){
+            model.addAttribute("errorUsername","The username already exists");
+            check = true;
+        }
+        if(user.getFullname().length()==0){
+            model.addAttribute("errorFullname","Fullname couldn't be null");
+            check = true;
+        }
+        if(check){
+            return "information";
+        }
+        else{
+            try{
+                userService.updateUser(user, userCurrent);
+            }catch (Exception e){
+            }
+            return "redirect:/blueshop/infor";
+        }
     }
 
     @GetMapping("/delete")

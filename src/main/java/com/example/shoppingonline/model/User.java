@@ -36,14 +36,14 @@ public class User {
     private int iduser;
 
     @NotNull
-    @NotBlank(message="Username can not be null") // Bắt buộc nhập
+    @NotBlank(message="Username couldn't be null") // Bắt buộc nhập
     private String username;
 
-    @Size(min=4, max=100)
+    @Size(min=4, max=100, message = "Size must be between 4 and 100")
     private String password;
 
     @NotNull
-    @NotBlank(message="Fullname can not be null")
+    @NotBlank(message="Fullname couldn't be null")
     private String fullname;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -53,13 +53,15 @@ public class User {
 
     private String phone;
 
-    private String shop;
-
     private String note;
 
-    @OneToOne // Đánh dấu có mỗi quan hệ 1-1 với Address ở phía dưới
+    @OneToOne(cascade = CascadeType.ALL) // Đánh dấu có mỗi quan hệ 1-1 với Address ở phía dưới
     @JoinColumn(name = "idaddress")
     private Address address;
+
+    @OneToOne(cascade = CascadeType.ALL) // Đánh dấu có mỗi quan hệ 1-1 với Address ở phía dưới
+    @JoinColumn(name = "idshop")
+    private Shop shop;
 
 //    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     //CascadeType.ALL: tất cả các hoạt động (insert, update, delete) trên một thực thể sẽ được lan truyền (cascade) sang các thực thể liên quan trong mqh
@@ -82,13 +84,13 @@ public class User {
 //    @JsonManagedReference
     private Collection<Bill> bills;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
-    @ToString.Exclude
-    @JsonBackReference
-//    @JsonIgnore
-//    @JsonManagedReference
-    private Collection<Product> products;
+//    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    @EqualsAndHashCode.Exclude // không sử dụng trường này trong equals và hashcode
+//    @ToString.Exclude
+//    @JsonBackReference
+////    @JsonIgnore
+////    @JsonManagedReference
+//    private Collection<Product> products;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -97,9 +99,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "idrole")
     )
     private Collection<Role> roles;
-    public void addProduct(Product product){
-        this.products.add(product);
-    }
+//    public void addProduct(Product product){
+//        this.products.add(product);
+//    }
 
     public void addRole(Role role){
         if (roles == null) {

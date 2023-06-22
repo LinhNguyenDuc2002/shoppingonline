@@ -25,9 +25,9 @@ public class ProductDAO {
     }
 
     public List<Product> getUserProducts(int id){
-        String sql = "SELECT p FROM Product p WHERE p.user.iduser = :iduser";
+        String sql = "SELECT p FROM Product p WHERE p.shop.idshop = :idshop";
         TypedQuery<Product> query = entityManager.createQuery(sql,Product.class);
-        query.setParameter("iduser",id);
+        query.setParameter("idshop",id);
         List<Product> value = query.getResultList();
         return value;
     }

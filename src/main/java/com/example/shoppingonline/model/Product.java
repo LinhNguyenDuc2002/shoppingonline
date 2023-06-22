@@ -50,11 +50,11 @@ public class Product {
     private Collection<Bill> bills;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "iduser")
+    @JoinColumn(name = "idshop")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonBackReference
-    private User user;
+    private Shop shop;
 
     public String getStringGia() {
         DecimalFormat decimalFormat = new DecimalFormat("#,##0.###");

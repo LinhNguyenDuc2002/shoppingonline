@@ -1,9 +1,11 @@
 package com.example.shoppingonline.controller;
 
 import com.example.shoppingonline.model.Product;
+import com.example.shoppingonline.model.Shop;
 import com.example.shoppingonline.model.User;
 import com.example.shoppingonline.model.UserDetailsImpl;
 import com.example.shoppingonline.repository.ProductRepository;
+import com.example.shoppingonline.repository.ShopRepository;
 import com.example.shoppingonline.repository.UserRepository;
 import com.example.shoppingonline.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,14 +45,21 @@ public class ProductController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ShopRepository shopRepository;
     @GetMapping("")
     public String getProducts(Model model){
         Object u = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("username", ((UserDetailsImpl)u).getFullname());
 
         User user = userRepository.findByUsername(((UserDetailsImpl)u).getUsername());
-        List<Product> products = productService.getUserProduct(user.getIduser());
-        model.addAttribute("products",products);
+        try{
+            List<Product> products = productService.getUserProduct(user.getShop().getIdshop());
+            model.addAttribute("products",products);
+        }
+        catch (Exception e){
+            model.addAttribute("products",null);
+        }
         return "product";
     }
 
@@ -64,13 +73,10 @@ public class ProductController {
             model.addAttribute("username", null);
         }
 
-
-        Optional<Product> product = productRepository.findById(id);
-        if(product.isPresent()){
-            int iduser = product.get().getUser().getIduser();
-            List<Product> products = productService.getUserProduct(iduser);
-            User userCurrent = userRepository.findById(iduser).get();
-            model.addAttribute("user",userCurrent);
+        Optional<Shop> shop = shopRepository.findById(id);
+        if(shop.isPresent()){
+            List<Product> products = productService.getUserProduct(id);
+            model.addAttribute("shop",shop.get());
             model.addAttribute("products",products);
         }
         return "productshop";
@@ -111,6 +117,12 @@ public class ProductController {
         Object u = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("username", ((UserDetailsImpl)u).getFullname());
 
+        User user = userRepository.findByUsername(((UserDetailsImpl)u).getUsername());
+        if(user.getShop()==null){
+            model.addAttribute("user",user);
+            model.addAttribute("errorShop","Please create a name for your shop to start selling");
+            return "information";
+        }
         Product product = new Product();
         model.addAttribute("product",product);
         return "addproduct";

@@ -27,8 +27,8 @@ public class ProductService {
     public void createProduct(Product product, User user, MultipartFile imagefile) throws IOException {
         byte[] image = imagefile.getBytes();
         product.setImage(image);
-        product.setUser(user);
-        user.addProduct(product);
+        product.setShop(user.getShop());
+        user.getShop().addProduct(product);
         userRepository.saveAndFlush(user);
     }
 

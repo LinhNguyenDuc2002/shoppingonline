@@ -10,6 +10,13 @@ CREATE TABLE address(
     tinhthanh varchar(100)
 );
 
+CREATE TABLE shop(
+	idshop int primary key,
+    nameshop varchar(100),
+    idaddress int,
+    FOREIGN KEY (idaddress) REFERENCES address(idaddress)
+);
+
 CREATE TABLE role(
 	idrole int primary key,
     namerole varchar(100)
@@ -25,7 +32,9 @@ CREATE TABLE user(
     phone varchar(12),
     note varchar(100),
     idaddress int,
-    FOREIGN KEY (idaddress) REFERENCES address(idaddress)
+    FOREIGN KEY (idaddress) REFERENCES address(idaddress),
+    idshop int,
+    FOREIGN KEY (idshop) REFERENCES shop(idshop)
 );
 
 CREATE TABLE product(
@@ -35,9 +44,9 @@ CREATE TABLE product(
     image  longblob,
     solg int,
     daban int,
-    note varchar(500),
-    iduser int,
-    FOREIGN KEY (iduser) REFERENCES user(iduser)
+    note text,
+    idshop int,
+    FOREIGN KEY (idshop) REFERENCES shop(idshop)
 );
 
 CREATE TABLE bill(
@@ -57,8 +66,12 @@ MODIFY COLUMN note text;
 ALTER TABLE user
 ADD COLUMN role varchar(100);
 
+ALTER TABLE user DROP COLUMN idshop;
+
+ALTER TABLE product DROP COLUMN iduser;
+
 ALTER TABLE user
-ADD COLUMN shop varchar(100);
+ADD COLUMN idshop int REFERENCES shop(idshop);
 
 ALTER TABLE bill
 ADD COLUMN idaddress int REFERENCES address(idaddress);

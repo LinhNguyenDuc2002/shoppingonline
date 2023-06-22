@@ -12,40 +12,53 @@
 <body>
     <th:block th:include="header"></th:block>  
     <div class="content">
-        <div id="header-content">
-            <div></div>
-            <div id="header-content-btn">
-                <a href="/blueshop" class="js-home">Home</a>
-                <a href="/product/addproduct" class="js-add-product">Add product</a>
-                <a href="/product" class="js-your-product">Your product</a>
-            </div>
-        </div>
-
         <div class="user-detail">
             <form method="POST" action="/blueshop/update" th:object="${user}">
-                <h1 th:text="@{${'Change personal information for '+user.getFullname()}}"></h1>
-                <input type="text" th:field="*{username}" placeholder="Enter username"/>
-                <p th:if="${#fields.hasErrors('username')}"  th:errors="*{username}" class="error"></p>
-                <input type="password" th:field="*{password}" placeholder="Enter new password"/>
-                <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}" class="error"></p>
-                <input type="text" th:field="*{fullname}" placeholder="Enter fullname"/>
-                <p th:if="${#fields.hasErrors('fullname')}"  th:errors="*{fullname}" class="error"></p>
-                <input type="date" th:field="*{dob}"/>
-                <input type="text" th:field="*{email}" placeholder="Enter email"/>
-                <input type="text" th:field="*{phone}" placeholder="Enter phone number"/>
-                <h2>Address</h2>
-                <input type="text" th:field="*{address.sonha}" placeholder="Số nhà"/>
-                <input type="text" th:field="*{address.xompho}" placeholder="Xóm, phố"/>
-                <input type="text" th:field="*{address.lang}" placeholder="Thôn (làng)"/>
-                <input type="text" th:field="*{address.phuongxa}" placeholder="Phường, xã"/>
-                <input type="text" th:field="*{address.quanhuyen}" placeholder="Quân, huyện"/></td>
-                <input type="text" th:field="*{address.tinhthanh}" placeholder="Tỉnh thành"/></td>
-                <div class="user-detail-button">
-                    <button id="signup">Update</button>
-                    <button><a href="/blueshop/delete">Delete account</a></button>
+                <div class="personal">
+                    <h3 th:text="@{${'Change personal information for '+user.getFullname()}}"></h3>
+                    <input type="text" th:field="*{username}" placeholder="Enter username"/>
+                    <!-- <p th:if="${#fields.hasErrors('username')}"  th:errors="*{username}" class="error"></p> -->
+                    <p th:if="${errorUsername}"  th:text="${errorUsername}" class="error"></p>
+                    <input type="password" th:field="*{password}" placeholder="Enter new password"/>
+                    <!-- <p th:if="${#fields.hasErrors('password')}"  th:errors="*{password}" class="error"></p> -->
+                    <p th:if="${errorPassword}"  th:text="${errorPassword}" class="error"></p>
+                    <input type="text" th:field="*{fullname}" placeholder="Enter fullname"/>
+                    <!-- <p th:if="${#fields.hasErrors('fullname')}"  th:errors="*{fullname}" class="error"></p> -->
+                    <p th:if="${errorFullname}"  th:text="${errorFullname}" class="error"></p>
+                    <input type="date" th:field="*{dob}"/>
+                    <input type="text" th:field="*{email}" placeholder="Enter email"/>
+                    <input type="text" th:field="*{phone}" placeholder="Enter phone number"/>
+                    <h3>Address</h3>
+                    <input type="text" th:field="*{address.sonha}" placeholder="Số nhà"/>
+                    <input type="text" th:field="*{address.xompho}" placeholder="Xóm, phố"/>
+                    <input type="text" th:field="*{address.lang}" placeholder="Thôn (làng)"/>
+                    <input type="text" th:field="*{address.phuongxa}" placeholder="Phường, xã"/>
+                    <input type="text" th:field="*{address.quanhuyen}" placeholder="Quân, huyện"/>
+                    <input type="text" th:field="*{address.tinhthanh}" placeholder="Tỉnh thành"/>
                 </div>
+                <div class="shop">
+                    <h3>Information for your shop</h3>
+                    <input type="text" th:field="*{shop.nameshop}" placeholder="Shop name"/>
+                    <p th:if="${errorShop}"  th:text="${errorShop}" class="error"></p>
+                    <h3>Address</h3>
+                    <input type="text" th:field="*{shop.address.sonha}" placeholder="Số nhà"/>
+                    <input type="text" th:field="*{shop.address.xompho}" placeholder="Xóm, phố"/>
+                    <input type="text" th:field="*{shop.address.lang}" placeholder="Thôn (làng)"/>
+                    <input type="text" th:field="*{shop.address.phuongxa}" placeholder="Phường, xã"/>
+                    <input type="text" th:field="*{shop.address.quanhuyen}" placeholder="Quân, huyện"/>
+                    <input type="text" th:field="*{shop.address.tinhthanh}" placeholder="Tỉnh thành"/>
+                    <p class="agree">1. Your store information will be public (meaning everyone can see it)</p>
+                    <p class="agree">2. When you make a purchase, the shipping address is your personal address</p>
+                    <p class="agree">3. Click "update" means that you agree to the above agreements</p>
+                    <div class="user-detail-button">
+                        <button id="signup">Update</button>
+                        <button><a href="/blueshop/delete">Delete account</a></button>
+                    </div>
+                </div>
+                
             </form>
         </div>
     </div>
+    <th:block th:include="footer"></th:block> 
 </body>
 </html>

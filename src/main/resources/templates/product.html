@@ -11,7 +11,7 @@
     <th:block th:include="header"></th:block>      
     <div class="content">
         <div class="product-list">
-            <div class="product-item" th:each="product :${products}">
+            <div th:if="${products}" class="product-item" th:each="product :${products}">
                 <div class="image">
                     <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
                 </div>
@@ -21,10 +21,14 @@
                     <button><a th:href="@{${'/product/edit/'+product.getIdproduct()}}">Edit product</a></button>
                 </div>
             </div>
+            <div th:unless="${products}" class="product-item">
+                <p class="error">You don't have any products yet</p>
+            </div>
             <div class="add product-item">
                 <a href="/product/addproduct"><i class="fas fa-plus"></i></a>
             </div>
         </div>
     </div>
+    <th:block th:include="footer"></th:block>    
 </body>
 </html>

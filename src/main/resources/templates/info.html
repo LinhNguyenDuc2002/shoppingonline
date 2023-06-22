@@ -30,7 +30,7 @@
                 <td th:date="${user.getDob()}"></td>
                 <td th:text="${user.getEmail()}"></td>
                 <td th:text="${user.getPhone()}"></td>
-                <td th:text="${user.getAddress().getTinhthanh()}"></td>
+                <!-- <td th:text="${user.getAddress().getTinhthanh()}"></td> -->
                 <td>
                     <a th:href="@{${'/blueshop/info/' + user.getIduser()}}">Edit</a>
                 </td>

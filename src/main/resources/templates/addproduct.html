@@ -10,14 +10,6 @@
 <body>
     <th:block th:include="header"></th:block>
     <div class="content">
-        <div id="header-content">
-            <div></div>
-            <div id="header-content-btn">
-                <a href="/blueshop" class="js-home">Home</a>
-                <a href="/product/addproduct" class="js-add-product">Add product</a>
-                <a href="/product" class="js-your-product">Your product</a>
-            </div>
-        </div>
         <form method="POST" action="/product/insert" th:object="${product}" enctype="multipart/form-data" class="add-product">
             <h2>Product information</h2>
             <div id="product-info">
@@ -26,11 +18,13 @@
                 <input type="text" th:field="*{gia}" placeholder="Unit price"/>
                 <input type="file" name="imagefile"/>
                 <input type="text" th:field="*{solg}" placeholder="Quantity available"/>
+                <!-- sử dụng readonly: không sửa dc, nhưng copy được; disable: không sửa được, không copy được -->
                 <textarea type="text" th:field="*{note}" placeholder="Product description" class="note"></textarea>
                 <button>Add product</button>
             </div>
             
         </form>
     </div>
+    <th:block th:include="footer"></th:block>
 </body>
 </html>

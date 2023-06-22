@@ -19,7 +19,7 @@
             </div>
             <div class="dropdown-content" id="myDropdown">
                 <a href="/blueshop/infor" class="see-detail">See all profiles</a>
-                <a href="/blueshop" class="js-home">Home</a>
+                <a href="/blueshop" class="js-home"><i class="fas fa-house"></i>Home</a>
                 <a href="/product"><i class="fas fa-shop"></i>My shop</a>
                 <a href="#"><i class="fas fa-gear"></i>Setting & privacy</a>
                 <a href="#"><i class="fas fa-question"></i>Help & support</a>
@@ -28,8 +28,12 @@
         </div>
         
         <div th:unless="${username != null}" class="header_button">
-            <button class="js-login">Login</button>
-            <button class="js-signup">Sign Up</button>
+            <form action="/blueshop/login" method="GET">
+                <button class="js-login">Login</button>
+            </form>
+            <form action="/blueshop/signup" method="GET">
+                <button class="js-signup">Sign Up</button>
+            </form>
         </div>
     </div>
 

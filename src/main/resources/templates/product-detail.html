@@ -10,17 +10,8 @@
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
-    <th:block th:include="header"></th:block>  
+    <th:block th:include="header"></th:block>
     <div class="content">
-        <div id="header-content">
-            <div></div>
-            <div id="header-content-btn">
-                <a href="/blueshop" class="js-home">Home</a>
-                <a href="/product/addproduct" class="js-add-product">Add product</a>
-                <a href="/product" class="js-your-product">Your product</a>
-            </div>
-        </div>
-
         <div th:object="${product}" class="product-detail">
             <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImageDetail" h>
             <p th:text="${product.getProductname()}" class="productName"></p>
@@ -28,16 +19,17 @@
             <div class="add-note">
                 <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
                 <p th:text="@{${'Available: '+product.getSolg()}}"></p>
-                <p th:text="@{${'Provided by '+product.getUser().getFullname()}}"></p>
-                <a th:href="@{${'/product/shop/'+product.getIdproduct()}}">View show</a>
+                <p>Provided by <a th:href="@{${'/product/shop/'+product.getShop().getIdshop()}}" th:text="${product.getShop().getNameshop()}"></a></p>
             </div>
             <div class="product-description">
                 <p>Product description:</p>
-                <p th:text="${product.getNote()}"></p>
+                <!-- sử dụng readonly: không sửa dc, nhưng copy được; disable: không sửa được, không copy được -->
+                <div class="text" th:utext="${product.getNote()}"></div>
             </div>
             
             <button><a href="">Buy now</a></button>
         </div>
     </div>
+    <th:block th:include="footer"></th:block> 
 </body>
 </html>
