@@ -48,7 +48,7 @@ a {
 #title{
     max-width: 400px;
     color: dodgerblue;
-    margin: 0px 50px;
+    margin: 0px 20px;
 }
 .user-icon {
     height: 40px;
@@ -279,7 +279,8 @@ p.agree {
     height: 300px;
     margin: 10px 15px;
     padding: 15px;
-    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
     /* position: relative; */
 }
 .product-item:hover{
@@ -298,15 +299,18 @@ p.agree {
 .image{
     height: 70%;
     width: 100%;
+    cursor: pointer;
 }
-.product-item p{
-    padding: 5px 0px;
+.product-item p {
+    padding: 5px;
     color: black;
-    font-weight: bold;
+    font-weight: unset;
     max-width: 100%; /*độ dài tối đa*/
     overflow: hidden; /*cắt ngắn (hiển thị phần đầu, ẩn phần sau)*/
     text-overflow: ellipsis; /*hiển thị ...*/
     white-space: nowrap; /*Không cho xuống dòng*/
+    cursor: pointer;
+    font-size: 15px;
 }
 .product-item button{
     margin: 0;
@@ -317,6 +321,16 @@ p.agree {
     /* position: absolute; */
     bottom: 0px;
     height: 30%;
+}
+.solg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.solg p {
+    font-weight: unset;
+    color: grey;
+    font-size: 13px;
 }
 .productImage{
     max-width: 100%;
@@ -339,43 +353,70 @@ p.agree {
 }
 .product-detail {
     height: auto;
-    margin: 30px 250px;
-    padding: 50px;
-    border: solid 3px dodgerblue;
+    margin: 20px 150px;
+    background-color: whitesmoke;
+    display: block;
+}
+.p1 {
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+}
+
+.image-product {
+    display: flex;
+    margin: 20px;
+    overflow: hidden; /*nội dung bên trong phần tử mà vượt ra ngoài phạm vi của phần tử cha sẽ bị ẩn đi*/
+    width: 40%;
+    height: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    align-items: center;
+    justify-content: center;
 }
 .productImageDetail {
-    margin-left: auto;
-    margin-right: auto;
+    height: auto;
+    width: 100%;
+}
+.info-buy {
     display: block;
-    height: 400px;
+    margin: 20px;
+    width: 100%;
 }
 .productName {
-    padding: 5px 0px;
-    font-size: 30px;
-    font-weight: bold;
+    padding: 15px 10px;
+    font-size: 25px;
+    font-weight: unset;
+    width: 100%;
 }
 #priceDetail {
-    padding: 5px 0px;
+    padding: 15px 10px;
     font-size: 25px;
-    font-weight: bold;
+    font-weight: unset;
     color: dodgerblue;
 }
-.product-description {
-    margin: 5px 0px;
-    border-top: solid 1px dodgerblue;
-    border-bottom: solid 1px dodgerblue;
+.p2 {
+    background-color: white;
+    margin: 20px 0px;
+    padding: 20px;
 }
-.product-description p{
-    padding: 10px 0px;
+.p2 p {
+    padding: 10px 20px;
+    background-color: whitesmoke;
+}
+.text {
+    white-space: pre-wrap;
+    resize: none;
+    height: auto;
+    padding: 20px;
 }
 .add-note {
-    display: flex;
-    padding: 5px 0px;
+    display: grid;
+    padding: 15px 10px;
     font-size: 15px;
     color: #ccc;
-    font-weight: 100;
-    align-items: center;
-    justify-content: space-between;
+    font-weight: unset;
+    grid-template-columns: repeat(4, 25%);
 }
 .add-note a{
     color: #ccc;
@@ -389,11 +430,38 @@ p.agree {
     height: 300px;
     resize: none;
 }
-.text{
-    white-space: pre-wrap;
-    resize: none;
-    height: auto;
+
+.buy {
+    display: grid;
+    padding: 15px 10px;
 }
+.quantity-input {
+    padding: 15px 0px;
+    display: flex;
+}
+.quantity-input button{
+    width: 50px;
+}
+.commit {
+    padding: 15px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: solid 1px dodgerblue;
+}
+.commit h3 {
+    width: fit-content;
+    color: dodgerblue;
+}
+.commit p {
+    margin: 0px 20px;
+    color: grey;
+}
+button.buy-product {
+    margin: 15px 0px;
+    width: 200px;
+}
+
 
 #price{
     color: dodgerblue;
@@ -512,6 +580,7 @@ p.error{
     justify-content: center;
     font-size: 13px;
     color: gray;
+    border-top: solid 5px dodgerblue;
 }
 .footer p {
     margin: 5px;

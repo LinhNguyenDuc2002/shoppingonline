@@ -13,23 +13,79 @@
     <th:block th:include="header"></th:block>
     <div class="content">
         <div th:object="${product}" class="product-detail">
-            <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImageDetail" h>
-            <p th:text="${product.getProductname()}" class="productName"></p>
-            <p id="priceDetail" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p> 
-            <div class="add-note">
-                <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
-                <p th:text="@{${'Available: '+product.getSolg()}}"></p>
-                <p>Provided by <a th:href="@{${'/product/shop/'+product.getShop().getIdshop()}}" th:text="${product.getShop().getNameshop()}"></a></p>
+            <div class="p1">
+                <div class="image-product">
+                    <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImageDetail">
+                </div>
+
+                <div class="info-buy">
+                    <p th:text="${product.getProductname()}" class="productName"></p>
+                    <div class="add-note">
+                        <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
+                        <p th:text="@{${'Availability: '+product.getSolg()}}"></p>
+                        <p>Provided by <a th:href="@{${'/product/shop/'+product.getShop().getIdshop()}}" th:text="${product.getShop().getNameshop()}"></a></p>
+                        <p th:text="${product.getShop().getAddress().getTinhthanh()}"></p>
+                    </div>
+                    <p id="priceDetail" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p> 
+                    
+                    <div class="buy">
+                        <div class="quantity-input">
+                            <button onclick="decreaseQuantity()"><i class="fas fa-minus"></i></button>
+                            <input type="number" id="quantity" value="1" min="1">
+                            <button onclick="increaseQuantity()"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <button class="buy-product"><a href="">Buy now</a></button>
+                    </div>
+
+                    <div class="commit">
+                        <h3><i class="fas fa-cart-shopping"></i>Blue shop đảm bảo</h3><p>3 Ngày Trả Hàng/ Hoàn Tiền</p>
+                    </div>
+                </div>
             </div>
-            <div class="product-description">
-                <p>Product description:</p>
+
+            <div class="p2">
+                <p>PRODUCT DESCRIPTION</p>
                 <!-- sử dụng readonly: không sửa dc, nhưng copy được; disable: không sửa được, không copy được -->
                 <div class="text" th:utext="${product.getNote()}"></div>
             </div>
-            
-            <button><a href="">Buy now</a></button>
+
+            <div class="p3">
+                <p>Other shop products</p>
+                <!-- <div class="product-list">
+                    <div class="product-item" th:each="product :${products}" th:data-productid="${product.getIdproduct()}" onclick="changeURL(this)">
+                        <div class="image">
+                            <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
+                        </div>
+                        <div class="info-product">
+                            <a th:href="@{${'/product/' + product.getIdproduct()}}"><p th:text="${product.getProductname()}"></p></a>
+                            <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
+                            <div class="solg">
+                                <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
+                                <p th:text="@{${'Availability: '+product.getSolg()}}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
         </div>
     </div>
     <th:block th:include="footer"></th:block> 
+    <script>
+        function increaseQuantity() {
+            var input = document.getElementById("quantity");
+            var currentValue = parseInt(input.value);
+            input.value = currentValue + 1;
+        }
+
+        function decreaseQuantity() {
+            var input = document.getElementById("quantity");
+            var currentValue = parseInt(input.value);
+            var minValue = parseInt(input.getAttribute("min"));
+
+            if (currentValue > minValue) {
+                input.value = currentValue - 1;
+            }
+        }
+    </script>
 </body>
 </html>

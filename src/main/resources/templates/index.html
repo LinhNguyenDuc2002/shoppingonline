@@ -75,14 +75,17 @@
                 </div>
             </div> -->
             <div class="product-list">
-                <div class="product-item" th:each="product :${products}">
+                <div class="product-item" th:each="product :${products}" th:data-productid="${product.getIdproduct()}" onclick="changeURL(this)">
                     <div class="image">
                         <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
                     </div>
                     <div class="info-product">
                         <a th:href="@{${'/product/' + product.getIdproduct()}}"><p th:text="${product.getProductname()}"></p></a>
                         <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
-                        <button><a th:href="@{${'/bill/'+product.getIdproduct()}}">Buy now</a></button>
+                        <div class="solg">
+                            <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
+                            <p th:text="@{${'Availability: '+product.getSolg()}}"></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,19 +93,23 @@
     </div>
 
     <th:block th:include="footer"></th:block>
-    <!-- <script src="/js/login.js">
-        function sendPostRequest() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/blueshop/login', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    var responseHtml = xhr.responseText;
-                    document.getElementById('your-tab-content').innerHTML = responseHtml;
-                }
-            };
-            xhr.send('param1=value1&param2=value2');
+    <script>
+        // function sendPostRequest() {
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open('POST', '/blueshop/login', true);
+        //     xhr.setRequestHeader('Content-Type', 'application/json');
+        //     xhr.onload = function() {
+        //         if (xhr.status === 200) {
+        //             var responseHtml = xhr.responseText;
+        //             document.getElementById('your-tab-content').innerHTML = responseHtml;
+        //         }
+        //     };
+        //     xhr.send('param1=value1&param2=value2');
+        // }
+        function changeURL(element){
+            var productId = element.getAttribute("data-productid");
+            window.location.href = "/product/" + productId;
         }
-    </script> -->
+    </script>
 </body>
 </html>

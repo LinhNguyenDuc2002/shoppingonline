@@ -24,11 +24,16 @@
             <div th:unless="${products}" class="product-item">
                 <p class="error">You don't have any products yet</p>
             </div>
-            <div class="add product-item">
-                <a href="/product/addproduct"><i class="fas fa-plus"></i></a>
+            <div class="add product-item" onclick="changeURL()">
+                <i class="fas fa-plus"></i>
             </div>
         </div>
     </div>
     <th:block th:include="footer"></th:block>    
+    <script>
+        function changeURL(){
+            window.location.href="/product/addproduct";
+        }
+    </script>
 </body>
 </html>

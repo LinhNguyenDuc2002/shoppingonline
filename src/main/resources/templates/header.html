@@ -11,11 +11,11 @@
 </head>
 <body>
     <div id="header">
-        <h1><a href="/blueshop" id="title">Blue shop</a></h1>
+        <h1><a href="/blueshop" id="title"><i class="fas fa-cart-shopping"></i>Blue shop</a></h1>
         <div th:if="${username != null}" class="header_button">
             <a href="/blueshop/infor" th:text="@{${'Hello, '+username+'!'}}" id="user"></a>
             <div class="user-icon" onclick="showDropdown()" id="js-user-icon">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user" onclick="showDropdown()" ></i>
             </div>
             <div class="dropdown-content" id="myDropdown">
                 <a href="/blueshop/infor" class="see-detail">See all profiles</a>

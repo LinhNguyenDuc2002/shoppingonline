@@ -31,4 +31,7 @@ public class ProductDAO {
         List<Product> value = query.getResultList();
         return value;
     }
+
+//    public List<Product> getNotChooseProduct(int idshop,int id){
+//    }
 }

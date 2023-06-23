@@ -92,7 +92,9 @@ public class ProductController {
             model.addAttribute("username", null);
         }
 
-        model.addAttribute("product",productRepository.findById(id).get());
+        Product product = productRepository.findById(id).get();
+        model.addAttribute("product",product);
+//        model.addAttribute("products",productService.getNotChooseProduct(product.getShop().getIdshop(),id));
         return "product-detail";
     }
 

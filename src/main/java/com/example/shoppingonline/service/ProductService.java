@@ -57,4 +57,8 @@ public class ProductService {
             productRepository.save(foundProduct);
         }
     }
+
+//    public List<Product> getNotChooseProduct(int idshop, int id){
+//        return productDAO.getNotChooseProduct(idshop,id);
+//    }
 }
