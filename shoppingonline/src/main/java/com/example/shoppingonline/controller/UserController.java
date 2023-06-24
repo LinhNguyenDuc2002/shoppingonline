@@ -6,6 +6,7 @@ import com.example.shoppingonline.repository.ProductRepository;
 import com.example.shoppingonline.repository.RoleRepository;
 import com.example.shoppingonline.repository.UserRepository;
 import com.example.shoppingonline.service.BillService;
+import com.example.shoppingonline.service.ProductService;
 import com.example.shoppingonline.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -58,6 +59,9 @@ public class UserController {
 
     @Autowired
     private BillService billService;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("")
     public String home(Model model) throws ParseException {
@@ -200,5 +204,4 @@ public class UserController {
         }
         return "redirect:/blueshop";
     }
-
 }

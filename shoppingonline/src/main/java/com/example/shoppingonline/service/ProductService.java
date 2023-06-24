@@ -8,6 +8,7 @@ import com.example.shoppingonline.repository.ProductRepository;
 import com.example.shoppingonline.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -61,4 +62,10 @@ public class ProductService {
 //    public List<Product> getNotChooseProduct(int idshop, int id){
 //        return productDAO.getNotChooseProduct(idshop,id);
 //    }
+
+    public List<Product> searchProducts(String keyword){
+        List<Product> product = productRepository.findByProductname(keyword);
+        return product;
+//        return productDAO.searchProducts(idshop,id);
+    }
 }

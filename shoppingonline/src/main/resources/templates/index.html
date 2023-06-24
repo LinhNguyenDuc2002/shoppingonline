@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- JQuery -->
+    <link th:href="@{/css/all.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <th:block th:include="header"></th:block>
+    
+    <div id="main">
+        <div class="content">
+            <div class="search">
+                <form id="searchForm">
+                    <div class="search-box">
+                        <input type="text" id="keyword" placeholder="Search">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </form>
+               
+                <form action="">
+                    <div class="sort-box">
+                        <p>Sort by</p>
+                        <a href="#">Popular</a>
+                        <a href="#">Latest</a>
+                        <a href="#">Bestseller</a>
+                        <select name="" id="">
+                            <option value="">Giá giảm dần</option>
+                            <option value="">Giá tăng dần</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- List product -->
+            <div class="product-list">
+                <div class="product-item" th:each="product :${products}" th:data-productid="${product.getIdproduct()}" onclick="changeURL(this)">
+                    <div class="image">
+                        <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
+                    </div>
+                    <div class="info-product">
+                        <a th:href="@{${'/product/' + product.getIdproduct()}}"><p th:text="${product.getProductname()}"></p></a>
+                        <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
+                        <div class="solg">
+                            <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
+                            <p th:text="@{${'Availability: '+product.getSolg()}}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>  
+    </div>
+
+    <th:block th:include="footer"></th:block>
+    <script>
+        function changeURL(element){
+            var productId = element.getAttribute("data-productid");
+            window.location.href = "/product/" + productId;
+        }
+
+        $(document).ready(function() { //Sự kiện JQuery được kích hoạt khi trang web đã tải hoàn toàn
+            $('#searchForm').submit(function(event) { //Khi searchForm được submit
+                event.preventDefault(); // Ngăn chặn form gửi yêu cầu mặc định (load lại trang)
+
+                var keyword = $('#keyword').val(); //lấy giá trị keyword được nhập
+
+                //Phương thức ajax của thư viện jquery
+                $.ajax({
+                    url: 'http://localhost:8080/product/search',
+                    type: 'GET',
+                    data: { keyword: keyword },
+                    success: function(data) {
+                        // Xử lý kết quả tìm kiếm
+                        displaySearchResults(data);
+                    }
+                    // ,
+                    // error: function(xhr, status, error) {
+                    //     console.log('Lỗi khi gửi yêu cầu tìm kiếm: ' + error);
+                    // }
+                });
+            });
+        });
+
+        function displaySearchResults(data) {
+            // Hiển thị kết quả tìm kiếm trong phần tử có id "searchResults"
+            var resultsElement = $('.product-list');
+            resultsElement.empty(); // Xóa nội dung cũ (nếu có)
+
+            // Xử lý và hiển thị dữ liệu tìm kiếm
+            // Ví dụ:
+            if (data.length > 0) {
+                if(resultsElement.hasClass('notFound')){
+                    resultsElement.removeClass('notFound');
+                }
+                data.forEach(function(product) {
+                    var productItem = $('<div>').addClass('product-item');
+                    productItem.attr('data-productid', product.idproduct);
+                    productItem.attr('onclick', 'changeURL(this)');
+
+                    var imageDiv = $('<div>').addClass('image');
+                    var image = $('<img>').attr('src', '/product/image/' + product.idproduct).attr('alt', 'Product Image').addClass('productImage');
+
+                    var infoDiv = $('<div>').addClass('info-product');
+                    var productName = $('<a>').attr('href', '/product/' + product.idproduct).append($('<p>').text(product.productname));
+                    var price = $('<p>').attr('id', 'price').text(product.stringGia + ' VNĐ');
+
+                    var solgDiv = $('<div>').addClass('solg');
+                    var sold = $('<p>').text('Sold: ' + product.daban);
+                    var availability = $('<p>').text('Availability: ' + product.solg);
+
+                    solgDiv.append(sold, availability);
+                    infoDiv.append(productName, price, solgDiv);
+                    productItem.append(imageDiv.append(image), infoDiv);
+                    resultsElement.append(productItem);
+                });
+            } else {
+                resultsElement.addClass('notFound');
+                var noResultsMessage = $('<p>').text('No match found').addClass('agree');
+                resultsElement.append(noResultsMessage);
+            }
+        }
+    </script>
+</body>
+</html>

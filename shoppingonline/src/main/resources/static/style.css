@@ -243,6 +243,7 @@ button {
     color: white;
     border: 0;
     font-weight: bold;
+    cursor: pointer;
 }
 button:hover{
     background-color: dodgerblue;
@@ -273,6 +274,12 @@ p.agree {
     display: grid;
     grid-template-columns: repeat(5, 20%);
     grid-gap: 0px;
+    min-height: 300px;
+}
+.notFound{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .product-item{
     float: left;
@@ -417,6 +424,7 @@ p.agree {
     color: #ccc;
     font-weight: unset;
     grid-template-columns: repeat(4, 25%);
+    grid-gap: 20px;
 }
 .add-note a{
     color: #ccc;
@@ -436,8 +444,9 @@ p.agree {
     padding: 15px 10px;
 }
 .quantity-input {
-    padding: 15px 0px;
+    margin: 15px 0px;
     display: flex;
+    width: 200px;
 }
 .quantity-input button{
     width: 50px;
@@ -460,6 +469,9 @@ p.agree {
 button.buy-product {
     margin: 15px 0px;
     width: 200px;
+}
+input#quantity {
+    width: 100px;
 }
 
 

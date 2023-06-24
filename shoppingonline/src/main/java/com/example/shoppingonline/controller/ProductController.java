@@ -167,4 +167,8 @@ public class ProductController {
         return "redirect:/product";
     }
 
+    @GetMapping("/search")
+    public @ResponseBody List<Product> searchProducts(@RequestParam String keyword) {
+        return productService.searchProducts(keyword);
+    }
 }
