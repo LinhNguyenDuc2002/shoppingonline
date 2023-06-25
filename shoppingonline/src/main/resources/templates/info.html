@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/all.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Fullname</th>
+            <th>Birthday</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <c th:each="user : ${users}">
+            <tr>
+                <td th:text="${user.getUsername()}"></td>
+                <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getFullname()}"></td>
+                <td th:date="${user.getDob()}"></td>
+                <td th:text="${user.getEmail()}"></td>
+                <td th:text="${user.getPhone()}"></td>
+                <!-- <td th:text="${user.getAddress().getTinhthanh()}"></td> -->
+                <td>
+                    <a th:href="@{${'/blueshop/info/' + user.getIduser()}}">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{${'/blueshop/delete/' + user.getIduser()}}">Delete</a>
+                </td>
+            </tr>
+        </c>
+    </table>
+    <a href="../user">
+        Go to Home
+    </a>
+</body>
+</html>

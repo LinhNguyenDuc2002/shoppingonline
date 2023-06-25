@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/all.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <th:block th:include="header"></th:block>      
+    <div class="content">
+        <div class="search">
+            <form action="">
+                <div class="search-box">
+                    <input type="text" name="search" placeholder="Search">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+           
+            <div class="sort-box">
+                <p>Sort by</p>
+                <a href="#" class="sort-box-a popular">Popular</a>
+                <a href="#" class="sort-box-a latest">Latest</a>
+                <a href="#" class="sort-box-a bestseller">Bestseller</a>
+                <select name="" id="">
+                    <option value="">Giá giảm dần</option>
+                    <option value="">Giá tăng dần</option>
+                </select>
+            </div>
+        </div>
+        <div class="introduce">
+            <div class="present">
+                <div class="avatar">
+                    <div>
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 th:text="${shop.getNameshop()}"></h3>
+                </div>
+                <div class="follow">
+                    <button><i class="fas fa-plus"></i>Follow</button>
+                    <button><i class="fas fa-message"></i>Chat</button>
+                </div>
+            </div>
+            <div class="shop-detail">
+                <p><i class="fas fa-cart-flatbed"></i>Product: </p>
+                <p><i class="fas fa-users"></i>Followers: </p>
+                <p><i class="fas fa-address-book"></i>Phone number: [[${shop.getSdt()}]]</p>
+                <p><i class="fas fa-star"></i>Rating: </p>
+                <p><i class="fas fa-envelope"></i>Email: [[${shop.getEmail()}]]</p>
+                <p><i class="fas fa-user-check"></i>Joined: </p>
+            </div>
+            <p id="address"><i class="fas fa-location-dot"></i>  [[${shop.getStringAddress()}]]</p>
+        </div>
+
+        <div class="product-list">
+            <div class="product-item" th:each="product :${products}" th:data-productid="${product.getIdproduct()}" onclick="changeURL(this)">
+                <div class="image">
+                    <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
+                </div>
+                <div class="info-product">
+                    <a th:href="@{${'/product/' + product.getIdproduct()}}"><p th:text="${product.getProductname()}"></p></a>
+                    <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
+                    <div class="solg">
+                        <p th:text="@{${'Sold: '+product.getDaban()}}"></p>
+                        <p th:text="@{${'Availability: '+product.getSolg()}}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="footer"></th:block>
+    <script src="/js/sort.js"></script>
+</body>
+</html>

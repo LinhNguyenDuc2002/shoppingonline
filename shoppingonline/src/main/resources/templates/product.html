@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+</head>
+<body>
+    <th:block th:include="header"></th:block>      
+    <div class="content">
+        <div class="product-list">
+            <div th:if="${products}" class="product-item" th:each="product :${products}">
+                <div class="image">
+                    <img th:src="@{${'/product/image/'+product.getIdproduct()}}" alt="Product Image" class="productImage"/>
+                </div>
+                <div class="info-product">
+                    <a th:href="@{${'/product/' + product.getIdproduct()}}"><p th:text="${product.getProductname()}"></p></a>
+                    <p id="price" th:text="@{${product.getStringGia() + ' VNĐ'}}"></p>
+                    <div class="view">
+                        <button><a th:href="@{${'/product/edit/'+product.getIdproduct()}}">Edit product</a></button>
+                        <button><a href="#">Preview</a></button>
+                    </div>
+                    
+                </div>
+            </div>
+            <div th:unless="${products}" class="product-item">
+                <p class="error">You don't have any products yet</p>
+            </div>
+            <div class="add product-item" onclick="changeURL()">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="footer"></th:block>    
+    <script>
+        function changeURL(){
+            window.location.href="/product/addproduct";
+        }
+    </script>
+</body>
+</html>
